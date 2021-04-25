@@ -24,11 +24,11 @@ public class BookmarksRepository {
     }
 
     // The public methods that simply call the DAO methods.
-    public LiveData<List<Bookmarks>> getBookmarks() {
+    public LiveData<List<Bookmark>> getBookmarks() {
         return bookmarksDao.getAllBookmarks();
     }
 
-    public LiveData<Bookmarks> getBookmark(int id) {
+    public LiveData<Bookmark> getBookmark(int id) {
         return bookmarksDao.getBookmark(id);
     }
 
@@ -37,15 +37,15 @@ public class BookmarksRepository {
 //    }
 
     // Insert and update methods.
-    public void addBookmark(Bookmarks bookmarks) {
+    public void addBookmark(Bookmark bookmark) {
         executor.execute(() -> {
-            bookmarksDao.addBookmarks(bookmarks);
+            bookmarksDao.addBookmarks(bookmark);
         });
     }
 
-    public void updateNode(Bookmarks bookmarks) {
+    public void updateNode(Bookmark bookmark) {
         executor.execute(() -> {
-            bookmarksDao.updateBookmark(bookmarks);
+            bookmarksDao.updateBookmark(bookmark);
         });
     }
 
