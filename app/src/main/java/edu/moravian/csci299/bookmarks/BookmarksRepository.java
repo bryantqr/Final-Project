@@ -2,8 +2,10 @@ package edu.moravian.csci299.bookmarks;
 
 import android.content.Context;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Room;
 
+import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -21,31 +23,31 @@ public class BookmarksRepository {
         bookmarksDao = database.bookmarksDao();
     }
 
-//    // The public methods that simply call the DAO methods.
-//    public LiveData<List<Node>> getNodes() {
-//        return bookmarksDao.getAllNodes();
-//    }
-//
-//    public LiveData<Node> getNode(int id) {
-//        return bookmarksDao.getNode(id);
-//    }
-//
-//    public LiveData<List<Node>> getChildren(int parentId) {
+    // The public methods that simply call the DAO methods.
+    public LiveData<List<Bookmarks>> getBookmarks() {
+        return bookmarksDao.getAllBookmarks();
+    }
+
+    public LiveData<Bookmarks> getBookmark(int id) {
+        return bookmarksDao.getBookmark(id);
+    }
+
+//    public LiveData<List<Bookmarks>> getChildren(int parentId) {
 //        return bookmarksDao.getChildren(parentId);
 //    }
-//
-//    // Insert and update methods.
-//    public void addNode(Node nodes) {
-//        executor.execute(() -> {
-//            bookmarksDao.addNodes(nodes);
-//        });
-//    }
-//
-//    public void updateNode(Node nodes) {
-//        executor.execute(() -> {
-//            bookmarksDao.updateNode(nodes);
-//        });
-//    }
+
+    // Insert and update methods.
+    public void addBookmark(Bookmarks bookmarks) {
+        executor.execute(() -> {
+            bookmarksDao.addBookmarks(bookmarks);
+        });
+    }
+
+    public void updateNode(Bookmarks bookmarks) {
+        executor.execute(() -> {
+            bookmarksDao.updateBookmark(bookmarks);
+        });
+    }
 
     // Single instance of the repository.
     private static BookmarksRepository INSTANCE;
