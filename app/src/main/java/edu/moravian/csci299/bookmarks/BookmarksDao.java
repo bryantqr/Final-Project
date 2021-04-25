@@ -19,8 +19,8 @@ public interface BookmarksDao {
      *
      * @return a live data view of all bookmarks in the database
      */
-    @Query("SELECT * FROM Bookmarks")
-    LiveData<List<Bookmarks>> getAllBookmarks();
+    @Query("SELECT * FROM Bookmark")
+    LiveData<List<Bookmark>> getAllBookmarks();
 
     /**
      * Gets a single bookmark from the database by its id.
@@ -28,8 +28,8 @@ public interface BookmarksDao {
      * @param id
      * @return a live data view of the bookmark from the database
      */
-    @Query("SELECT * FROM Bookmarks WHERE id = (:id) LIMIT 1")
-    LiveData<Bookmarks> getBookmark(int id);
+    @Query("SELECT * FROM Bookmark WHERE id = (:id) LIMIT 1")
+    LiveData<Bookmark> getBookmark(int id);
 
 //    /**
 //     * Gets all of the nodes that are the children of a specific node given by its parent id.
@@ -46,17 +46,17 @@ public interface BookmarksDao {
      * the argument any number of times.
      */
     @Insert
-    void addBookmarks(Bookmarks... bookmarks);
+    void addBookmarks(Bookmark... bookmarks);
 
     /**
      * Remove a single bookmark in the database.
      */
     @Delete
-    void removeBookmark(Bookmarks bookmarks);
+    void removeBookmark(Bookmark bookmark);
 
     /**
      * Update an bookmark in the database.
      */
     @Update
-    void updateBookmark(Bookmarks bookmarks);
+    void updateBookmark(Bookmark bookmark);
 }
