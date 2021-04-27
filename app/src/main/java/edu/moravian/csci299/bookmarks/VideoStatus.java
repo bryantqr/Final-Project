@@ -10,4 +10,8 @@ public enum VideoStatus {
     VideoStatus(int value) {
         this.value = value;
     }
+
+    int getValue() {
+        return value;
+    }
 }

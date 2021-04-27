@@ -10,4 +10,8 @@ public enum ImageStatus {
     ImageStatus(int value) {
         this.value = value;
     }
+
+    int getValue() {
+        return value;
+    }
 }

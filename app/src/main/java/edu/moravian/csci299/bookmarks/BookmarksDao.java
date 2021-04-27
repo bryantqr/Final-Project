@@ -28,7 +28,7 @@ public interface BookmarksDao {
      * @param id
      * @return a live data view of the bookmark from the database
      */
-    @Query("SELECT * FROM Bookmark WHERE id = (:id) LIMIT 1")
+    @Query("SELECT * FROM Bookmark WHERE itemId = (:id) LIMIT 1")
     LiveData<Bookmark> getBookmark(int id);
 
 //    /**
