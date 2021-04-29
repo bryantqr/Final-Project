@@ -86,4 +86,10 @@ public class BookmarkTypeConverter {
     {
         return null;
     }
+
+    @TypeConverter
+    public Bookmark toBookmark(String value) { return null; }
+
+    @TypeConverter
+    public String fromBookmark(Bookmark bookmark) { return null; }
 }
