@@ -43,6 +43,7 @@ public class ListFragment extends Fragment {
     private WebView webView; //WebView to be shown
     private RecyclerView list_view;
 
+
     private Callbacks callbacks;
 
     public static ListFragment newInstance() { return newInstance(new Bookmark());}
