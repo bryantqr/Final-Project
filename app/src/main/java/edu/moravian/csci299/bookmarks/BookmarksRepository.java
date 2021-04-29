@@ -32,10 +32,6 @@ public class BookmarksRepository {
         return bookmarksDao.getBookmark(id);
     }
 
-//    public LiveData<List<Bookmarks>> getChildren(int parentId) {
-//        return bookmarksDao.getChildren(parentId);
-//    }
-
     // Insert and update methods.
     public void addBookmark(Bookmark bookmark) {
         executor.execute(() -> {
@@ -43,7 +39,7 @@ public class BookmarksRepository {
         });
     }
 
-    public void updateNode(Bookmark bookmark) {
+    public void updateBookmark(Bookmark bookmark) {
         executor.execute(() -> {
             bookmarksDao.updateBookmark(bookmark);
         });

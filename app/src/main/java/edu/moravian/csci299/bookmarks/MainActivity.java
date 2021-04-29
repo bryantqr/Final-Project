@@ -1,3 +1,4 @@
+
 package edu.moravian.csci299.bookmarks;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -5,9 +6,9 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
-import edu.moravian.csci299.bookmark.R;
-
 public class MainActivity extends AppCompatActivity implements ListFragment.Callbacks{
+    private ListFragment listFragment;
+
     private ListFragment listFragment;
 
     @Override
