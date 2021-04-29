@@ -6,7 +6,11 @@ import androidx.fragment.app.FragmentManager;
 
 import android.os.Bundle;
 
-import java.util.Date;
+//<<<<<<< HEAD
+//import java.util.Date;
+//=======
+//import edu.moravian.csci299.bookmark.R;
+//>>>>>>> 368f42868adb1dd322849c85ced20d4c7336fc43
 
 public class MainActivity extends AppCompatActivity {
 

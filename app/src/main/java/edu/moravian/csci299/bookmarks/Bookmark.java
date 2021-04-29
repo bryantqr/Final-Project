@@ -1,11 +1,13 @@
 package edu.moravian.csci299.bookmarks;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Bookmark {
     @PrimaryKey
+    @NonNull
     public String itemId;
     public String resolvedId;
     public String givenUrl;
