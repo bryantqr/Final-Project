@@ -1,6 +1,6 @@
 package edu.moravian.csci299.bookmarks;
 
-import android.os.Bundle;
+public class ListFragment {
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

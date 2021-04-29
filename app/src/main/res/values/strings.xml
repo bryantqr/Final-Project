@@ -1,6 +1,4 @@
 <resources>
     <string name="app_name">Bookmarks</string>
-    <string name="name">Name</string>
-    <string name="bookmark">Bookmark</string>
-    <string name="new_bookmark">New Bookmark</string>
+
 </resources>
