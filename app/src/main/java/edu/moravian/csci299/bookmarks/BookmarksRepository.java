@@ -43,7 +43,7 @@ public class BookmarksRepository {
         });
     }
 
-    public void updateNode(Bookmark bookmark) {
+    public void updateBookmark(Bookmark bookmark) {
         executor.execute(() -> {
             bookmarksDao.updateBookmark(bookmark);
         });
@@ -60,7 +60,7 @@ public class BookmarksRepository {
 
     public static BookmarksRepository get() {
         if (INSTANCE == null) {
-            throw new IllegalStateException("NodeRepository must be initialized");
+            throw new IllegalStateException("BookmarkRepository must be initialized");
         }
         return INSTANCE;
     }
