@@ -21,16 +21,15 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Call
             listFragment = ListFragment.newInstance();
             fragmentManager.beginTransaction()
                     .add(R.id.fragment_container, listFragment, "list")
-
                     .commit();
         }
     }
 
     @Override
     public void onBookmarkClicked(Bookmark bookmark) {
-        //getSupportFragmentManager().beginTransaction()
-                //.replace(R.id.fragment_container, BookmarkFragment.newInstance(bookmark))
-                //.addToBackStack(null)
-                //.commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, BookmarkEditorFragment.newInstance(bookmark))
+                .addToBackStack(null)
+                .commit();
     }
 }
