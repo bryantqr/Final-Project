@@ -15,6 +15,8 @@ import androidx.fragment.app.Fragment;
 import java.util.Date;
 import java.util.UUID;
 
+import edu.moravian.csci299.bookmark.R;
+
 /**
  * The fragment for a single event. It allows editing all of the details of the event, either with
  * text edit boxes (for the name and description) or popup windows (for the date, start time,
