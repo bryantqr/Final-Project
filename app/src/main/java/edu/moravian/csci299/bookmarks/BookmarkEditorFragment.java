@@ -12,15 +12,12 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import java.util.Date;
-import java.util.UUID;
-
 /**
  * The fragment for a single event. It allows editing all of the details of the event, either with
  * text edit boxes (for the name and description) or popup windows (for the date, start time,
  * time and type). The event is not updated in the database until the user leaves this fragment.
  */
-public class BookmarkEditorFragment extends Fragment {
+public class BookmarkEditorFragment extends Fragment implements TextWatcher {
     private static final String ARG_NAME = "Name";
     private static final String ARG_EVENT_ID = "event_id";
     private static final String ARG_URL = "Url";
@@ -28,12 +25,19 @@ public class BookmarkEditorFragment extends Fragment {
 //    private static final int REQUEST_TIME = 1;
 //    private static final int REQUEST_EVENT_TYPE = 2;
 
+
+    //NAME(GIVEN TITLE) AND TAGS
+
     private Bookmark bookmark;
 
-    private ImageView typeView;
-    private TextView dateView;
+    //private ImageView typeView;
+    //private TextView dateView;
 
-    private EditText descriptionView;
+    private EditText givenTitle;
+
+    private View tags[];
+
+
 
 
     public static BookmarkEditorFragment newInstance(Bookmark bookmark) {
@@ -61,7 +65,15 @@ public class BookmarkEditorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View base = inflater.inflate(R.layout.activity_main, container, false);
+        View base = inflater.inflate(R.layout.fragment_bookmark, container, false);
+
+        for (View tagView: tags) {
+            tagView = base.findViewById(R.id.bookmarkTag);
+            //tagView.setOnClickListener(v -> );
+        }
+
+        givenTitle = base.findViewById(R.id.bookmarkName);
+        givenTitle.addTextChangedListener(this);
 //
 //        typeView = base.findViewById(R.id.eventType);
 //        typeView.setOnClickListener(v -> showEventTypePicker());
@@ -76,6 +88,7 @@ public class BookmarkEditorFragment extends Fragment {
 //        endTimeView.setOnClickListener(v -> showTimePicker(false));
 //        descriptionView = base.findViewById(R.id.eventDescription);
 //        descriptionView.addTextChangedListener(this);
+        
 
         return base;
     }
@@ -168,6 +181,7 @@ public class BookmarkEditorFragment extends Fragment {
 
     /** Updates the UI to match the event. */
     private void updateUI() {
+        //givenTitle.setText();
 //        typeView.setImageResource(event.type.iconResourceId);
 //        nameView.setText(event.name);
 //        dateView.setText(DateUtils.toFullDateString(event.startTime));
@@ -183,6 +197,22 @@ public class BookmarkEditorFragment extends Fragment {
 //        descriptionView.setText(event.description);
     }
 
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//        if (s == givenTitle.getText()) { bookmark.name = s.toString(); }
+//        else if (s == descriptionView.getText()) { event.description = s.toString(); }
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+    }
+
+    @Override
+    public void afterTextChanged(Editable s) {
+
+    }
 }
 
 
