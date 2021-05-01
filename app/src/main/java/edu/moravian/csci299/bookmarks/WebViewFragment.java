@@ -24,7 +24,7 @@ public class WebViewFragment extends Fragment {
     private String url;
 
     public static Fragment newInstance() {
-
+        return null;
     }
 
     @Override
