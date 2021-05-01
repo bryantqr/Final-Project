@@ -35,10 +35,10 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Call
 
     @Override
     public void onSettingsClicked() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, SettingsBookmarkFragment.newInstance())
-                .addToBackStack(null)
-                .commit();
+        //getSupportFragmentManager().beginTransaction()
+                //.replace(R.id.fragment_container, SettingsBookmarkFragment.newInstance())
+                //.addToBackStack(null)
+                //.commit();
     }
 
     @Override

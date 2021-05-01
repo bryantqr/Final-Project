@@ -23,6 +23,10 @@ public class WebViewFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String url;
 
+    public static Fragment newInstance() {
+
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
