@@ -32,6 +32,10 @@ public class BookmarksRepository {
         return bookmarksDao.getBookmark(id);
     }
 
+//    public LiveData<List<Bookmarks>> getChildren(int parentId) {
+//        return bookmarksDao.getChildren(parentId);
+//    }
+
     // Insert and update methods.
     public void addBookmark(Bookmark bookmark) {
         executor.execute(() -> {
@@ -56,7 +60,7 @@ public class BookmarksRepository {
 
     public static BookmarksRepository get() {
         if (INSTANCE == null) {
-            throw new IllegalStateException("NodeRepository must be initialized");
+            throw new IllegalStateException("BookmarkRepository must be initialized");
         }
         return INSTANCE;
     }
