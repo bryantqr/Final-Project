@@ -12,8 +12,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import edu.moravian.csci299.bookmark.R;
-
 public class WebViewFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +20,10 @@ public class WebViewFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private String url;
+
+    public static Fragment newInstance() {
+        return null;
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
