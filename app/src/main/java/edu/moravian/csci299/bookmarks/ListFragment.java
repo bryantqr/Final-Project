@@ -14,7 +14,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
+import android.widget.TextView;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -32,6 +32,7 @@ public class ListFragment extends Fragment {
     public interface Callbacks {
         void onBookmarkClicked(Bookmark bookmark);
         void onSettingsClicked();
+        void onEditorClicked(Bookmark bookmark);
     }
 
     // TODO: Rename parameter arguments, choose names that match
@@ -40,10 +41,9 @@ public class ListFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private List<Bookmark> bookmarks = Collections.emptyList(); //list of bookmark items
-    //private String id; //resolved_id
-    //private String url; //resolved_url
+    private String url; //resolved_url
     private Bookmark bookmark; //bookmark item
-    private WebView webView; //WebView to be shown
+    private TextView bookmarkView; //the bookmark on the list
     private BookmarkAdapter adapter;
 
 
@@ -89,15 +89,17 @@ public class ListFragment extends Fragment {
 
     private class BookmarkViewHolder extends RecyclerView.ViewHolder {
         Bookmark bookmark;
-        WebView webView;
+        TextView bookmarkView;
 
         public BookmarkViewHolder(@NonNull View itemView)
         {
             super(itemView);
+            bookmarkView = itemView.findViewById(R.id.bookmarkView);
             itemView.setOnClickListener(v -> callbacks.onBookmarkClicked(bookmark));
         }
 
         public void bind(Bookmark bookmark) {
+            bookmarkView.setText(bookmark.resolvedTitle);
             this.bookmark = bookmark;
         }
     }
@@ -160,7 +162,6 @@ public class ListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.settings) {
-            // new event: 1 hour default
             SettingsBookmarkFragment settingsBookmarkFragment = new SettingsBookmarkFragment();
             callbacks.onSettingsClicked();
             return true;
