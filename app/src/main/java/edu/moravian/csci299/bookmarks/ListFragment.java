@@ -16,11 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
-
-import edu.moravian.csci299.bookmark.R;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,40 +25,24 @@ import edu.moravian.csci299.bookmark.R;
  * create an instance of this fragment.
  */
 public class ListFragment extends Fragment {
-
     public interface Callbacks {
         void onBookmarkClicked(Bookmark bookmark);
         void onSettingsClicked();
         void onEditorClicked(Bookmark bookmark);
     }
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_BOOKMARK = "bookmark";
-
-    // TODO: Rename and change types of parameters
-    private List<Bookmark> bookmarks = Collections.emptyList(); //list of bookmark items
-    private String url; //resolved_url
-    private Bookmark bookmark; //bookmark item
-    private TextView bookmarkView; //the bookmark on the list
-    private BookmarkAdapter adapter;
-
-
+    private List<Bookmark> bookmarks = Collections.emptyList();
+    private RecyclerView list;
     private Callbacks callbacks;
-
-    public static ListFragment newInstance() { return newInstance(new Bookmark());}
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     * @param bookmark bookmark to be listed.
      * @return A new instance of fragment ListFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ListFragment newInstance(Bookmark bookmark) {
+    public static ListFragment newInstance() {
         ListFragment fragment = new ListFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_BOOKMARK, (Serializable)bookmark);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,62 +51,24 @@ public class ListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        bookmark = (Bookmark) getArguments().getSerializable(ARG_BOOKMARK);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_list, container, false);
+        View base = inflater.inflate(R.layout.fragment_list, container, false);
 
-        RecyclerView list_view = v.findViewById(R.id.list_view);
-        list_view.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new BookmarkAdapter();
-        list_view.setAdapter(adapter);
+        BookmarkListAdapter adapter = new BookmarkListAdapter();
+        list = base.findViewById(R.id.list_view);
+        list.setLayoutManager(new LinearLayoutManager(getContext()));
+        list.setAdapter(adapter);
 
-        return v;
-    }
-
-    private class BookmarkViewHolder extends RecyclerView.ViewHolder {
-        Bookmark bookmark;
-        TextView bookmarkView;
-
-        public BookmarkViewHolder(@NonNull View itemView)
-        {
-            super(itemView);
-            bookmarkView = itemView.findViewById(R.id.bookmarkView);
-            itemView.setOnClickListener(v -> callbacks.onBookmarkClicked(bookmark));
-        }
-
-        public void bind(Bookmark bookmark) {
-            bookmarkView.setText(bookmark.resolvedTitle);
-            this.bookmark = bookmark;
-        }
-    }
-
-    private class BookmarkAdapter extends RecyclerView.Adapter<BookmarkViewHolder> {
-
-        @NonNull
-        @Override
-        public BookmarkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item ,parent, false);
-            return new BookmarkViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull BookmarkViewHolder holder, int position) {
-            holder.bind(bookmarks.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return bookmarks.size();
-        }
+        return base;
     }
 
     /**
-     * When attaching to a hosting activity, use that context for the callbacks.
+     * Set the callbacks to the hosting context.
      * @param context the hosting activity context
      */
     @Override
@@ -135,7 +78,7 @@ public class ListFragment extends Fragment {
     }
 
     /**
-     * When detaching from a hosting activity, remove the callbacks.
+     * Set the callbacks to null.
      */
     @Override
     public void onDetach() {
@@ -162,11 +105,49 @@ public class ListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.settings) {
-            SettingsBookmarkFragment settingsBookmarkFragment = new SettingsBookmarkFragment();
             callbacks.onSettingsClicked();
             return true;
-        } else {
-            return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private class BookmarkViewHolder extends RecyclerView.ViewHolder {
+        private Bookmark bookmark;
+        private final TextView bookmarkView;
+
+        public BookmarkViewHolder(@NonNull View itemView)
+        {
+            super(itemView);
+
+            bookmarkView = itemView.findViewById(R.id.bookmarkView);
+            itemView.setOnClickListener(v -> callbacks.onBookmarkClicked(bookmark));
+        }
+
+        public void bind(Bookmark bookmark) {
+            this.bookmark = bookmark;
+            bookmarkView.setText(bookmark.resolvedTitle);
+        }
+    }
+
+    private class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkViewHolder> {
+        @NonNull
+        @Override
+        public BookmarkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View view = inflater.inflate(R.layout.bookmark_item ,parent, false);
+
+            return new BookmarkViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull BookmarkViewHolder holder, int position) {
+            Bookmark bookmark = bookmarks.get(position);
+            holder.bind(bookmark);
+        }
+
+        @Override
+        public int getItemCount() {
+            return bookmarks.size();
         }
     }
 }
