@@ -20,14 +20,29 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * A Fragment that displays a list of bookmarks added by the user. Its list is a RecyclerView, and when a
+ * bookmark is clicked, it will open a WebView of wherever the bookmark is linked to.
  */
 public class ListFragment extends Fragment {
     public interface Callbacks {
+        /**
+         * The callback that is called by this fragment when a bookmark is clicked on the hosting
+         * activity
+         * @param bookmark the bookmark clicked
+         */
         void onBookmarkClicked(Bookmark bookmark);
+
+        /**
+         * The callback that is called by this fragment when the setting icon on the menu
+         * is clicked on the hosting activity
+         */
         void onSettingsClicked();
+
+        /**
+         * The callback that is called by this fragment when the bookmark editor is clicked on the hosting
+         * activity
+         * @param bookmark
+         */
         void onEditorClicked(Bookmark bookmark);
     }
 
@@ -36,8 +51,13 @@ public class ListFragment extends Fragment {
     private Callbacks callbacks;
 
     /**
+<<<<<<< HEAD
+     * The factory method to create a new instance of
+     * this fragment.
+=======
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
+>>>>>>> master
      * @return A new instance of fragment ListFragment.
      */
     public static ListFragment newInstance() {
@@ -57,9 +77,7 @@ public class ListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         onChange();
-
         setHasOptionsMenu(true);
     }
 
@@ -108,7 +126,7 @@ public class ListFragment extends Fragment {
     }
 
     /**
-     * Handle a menu option being selected.
+     * Handle a menu option being selected. Options are either the settings, or adding a new bookmark.
      * @param item the item being selected
      * @return true if the menu item selection was handled, false otherwise
      */

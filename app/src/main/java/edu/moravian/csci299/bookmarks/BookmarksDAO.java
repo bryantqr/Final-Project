@@ -36,7 +36,7 @@ public interface BookmarksDAO {
      * the argument any number of times.
      */
     @Insert
-    void addBookmark(Bookmark... bookmark);
+    void addBookmark(Bookmark bookmark);
 
     /**
      * Remove a single bookmark in the database.

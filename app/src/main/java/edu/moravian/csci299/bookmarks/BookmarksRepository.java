@@ -36,6 +36,7 @@ public class BookmarksRepository {
     public LiveData<List<Bookmark>> getBookmarks() {
         return dao.getAllBookmarks();
     }
+
     public LiveData<Bookmark> getBookmark(String id) {
         return dao.getBookmark(id);
     }

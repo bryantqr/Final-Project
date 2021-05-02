@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Segnalibri</string>
+    <string name="name">Nome</string>
+    <string name="bookmark">Segnalibro</string>
+    <string name="new_bookmark">Nuovo Segnalibro</string>
+    <string name="settings">Impostazioni</string>
+    <string name="language">Linguaggio</string>
+</resources>
