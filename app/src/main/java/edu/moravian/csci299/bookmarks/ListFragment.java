@@ -19,14 +19,11 @@ import android.widget.TextView;
 import java.util.Collections;
 import java.util.List;
 
-import edu.moravian.csci299.bookmark.R;
-
 /**
  * A Fragment that displays a list of bookmarks added by the user. Its list is a RecyclerView, and when a
  * bookmark is clicked, it will open a WebView of wherever the bookmark is linked to.
  */
 public class ListFragment extends Fragment {
-
     public interface Callbacks {
         /**
          * The callback that is called by this fragment when a bookmark is clicked on the hosting
@@ -49,13 +46,18 @@ public class ListFragment extends Fragment {
         void onEditorClicked(Bookmark bookmark);
     }
 
-    private List<Bookmark> bookmarks = Collections.emptyList(); //list of bookmark items
+    private List<Bookmark> bookmarks = Collections.emptyList();
     private RecyclerView list;
     private Callbacks callbacks;
 
     /**
+<<<<<<< HEAD
      * The factory method to create a new instance of
      * this fragment.
+=======
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+>>>>>>> master
      * @return A new instance of fragment ListFragment.
      */
     public static ListFragment newInstance() {
@@ -65,9 +67,6 @@ public class ListFragment extends Fragment {
         return fragment;
     }
 
-    /**
-     * A method used to update the list of bookmarks.
-     */
     private void onChange() {
         BookmarksRepository.get().getBookmarks().observe(this, (bookmarks) -> {
             this.bookmarks = bookmarks;
@@ -88,54 +87,16 @@ public class ListFragment extends Fragment {
         // Inflate the layout for this fragment
         View base = inflater.inflate(R.layout.fragment_list, container, false);
 
-        BookmarkViewAdapter adapter = new BookmarkViewAdapter();
+        BookmarkListAdapter adapter = new BookmarkListAdapter();
         list = base.findViewById(R.id.list_view);
         list.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new BookmarkViewAdapter();
         list.setAdapter(adapter);
 
         return base;
     }
 
-    private class BookmarkViewHolder extends RecyclerView.ViewHolder {
-        Bookmark bookmark;
-        TextView bookmarkView;
-
-        public BookmarkViewHolder(@NonNull View itemView)
-        {
-            super(itemView);
-            bookmarkView = itemView.findViewById(R.id.bookmarkView);
-            itemView.setOnClickListener(v -> callbacks.onBookmarkClicked(bookmark));
-        }
-
-        public void bind(Bookmark bookmark) {
-            bookmarkView.setText(bookmark.resolvedTitle);
-            this.bookmark = bookmark;
-        }
-    }
-
-    private class BookmarkViewAdapter extends RecyclerView.Adapter<BookmarkViewHolder> {
-
-        @NonNull
-        @Override
-        public BookmarkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bookmark_item ,parent, false);
-            return new BookmarkViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull BookmarkViewHolder holder, int position) {
-            holder.bind(bookmarks.get(position));
-        }
-
-        @Override
-        public int getItemCount() {
-            return bookmarks.size();
-        }
-    }
-
     /**
-     * When attaching to a hosting activity, use that context for the callbacks.
+     * Set the callbacks to the hosting context.
      * @param context the hosting activity context
      */
     @Override
@@ -145,7 +106,7 @@ public class ListFragment extends Fragment {
     }
 
     /**
-     * When detaching from a hosting activity, remove the callbacks.
+     * Set the callbacks to null.
      */
     @Override
     public void onDetach() {
@@ -174,12 +135,47 @@ public class ListFragment extends Fragment {
         if (item.getItemId() == R.id.settings) {
             callbacks.onSettingsClicked();
             return true;
-        } else if (item.getItemId() == R.id.new_bookmark) {
-            Bookmark bookmark = new Bookmark();
-            BookmarksRepository.get().addBookmark(bookmark);
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private class BookmarkViewHolder extends RecyclerView.ViewHolder {
+        private Bookmark bookmark;
+        private final TextView textView;
+
+        public BookmarkViewHolder(@NonNull View itemView)
+        {
+            super(itemView);
+
+            textView = itemView.findViewById(R.id.textView);
+            itemView.setOnClickListener(v -> callbacks.onBookmarkClicked(bookmark));
+        }
+
+        public void bind(Bookmark bookmark) {
+            this.bookmark = bookmark;
+            textView.setText(bookmark.resolvedTitle);
+        }
+    }
+
+    private class BookmarkListAdapter extends RecyclerView.Adapter<BookmarkViewHolder> {
+        @NonNull
+        @Override
+        public BookmarkViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View view = inflater.inflate(R.layout.bookmark_item ,parent, false);
+
+            return new BookmarkViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull BookmarkViewHolder holder, int position) {
+            Bookmark bookmark = bookmarks.get(position);
+            holder.bind(bookmark);
+        }
+
+        @Override
+        public int getItemCount() {
+            return bookmarks.size();
         }
     }
 }

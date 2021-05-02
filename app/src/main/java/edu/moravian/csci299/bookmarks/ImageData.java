@@ -1,5 +1,8 @@
 package edu.moravian.csci299.bookmarks;
 
+/**
+ *  An Image data object contains all of the information about the image.
+ */
 public class ImageData implements java.io.Serializable {
     public String source;
     public int width;

@@ -1,5 +1,9 @@
 package edu.moravian.csci299.bookmarks;
 
+
+/**
+ *  A Video data object contains all of the information about the video.
+ */
 public class VideoData implements java.io.Serializable {
     public String source;
     public int width;

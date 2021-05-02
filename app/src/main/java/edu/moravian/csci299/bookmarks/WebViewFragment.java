@@ -13,8 +13,6 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import edu.moravian.csci299.bookmark.R;
-
 public class WebViewFragment extends Fragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,6 +27,10 @@ public class WebViewFragment extends Fragment {
         args.putParcelable(ARG_URI, uri);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public static Fragment newInstance() {
+        return null;
     }
 
     @Override

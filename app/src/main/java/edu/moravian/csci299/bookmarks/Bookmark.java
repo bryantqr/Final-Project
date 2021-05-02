@@ -4,6 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ *  A Bookmark object contains all of the information about the bookmark.
+ */
+
 @Entity
 public class Bookmark {
     @PrimaryKey

@@ -15,8 +15,6 @@ import android.widget.CompoundButton;
 import android.content.res.Resources;
 import android.widget.TextView;
 
-import edu.moravian.csci299.bookmark.R;
-
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SettingsFragment#newInstance} factory method to
