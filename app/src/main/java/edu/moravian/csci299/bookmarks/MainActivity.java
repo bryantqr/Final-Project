@@ -27,9 +27,9 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Call
     }
 
     @Override
-    public void onBookmarkClicked(Uri uri) {
+    public void onBookmarkClicked(Bookmark bookmark) {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, WebViewFragment.newInstance(uri))
+                .replace(R.id.fragment_container, WebViewFragment.newInstance(bookmark))
                 .addToBackStack(null)
                 .commit();
     }
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Call
     @Override
     public void onSettingsClicked() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, SettingsBookmarkFragment.newInstance())
+                .replace(R.id.fragment_container, SettingsFragment.newInstance())
                 .addToBackStack(null)
                 .commit();
     }

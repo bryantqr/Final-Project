@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Signets</string>
+    <string name="name">Nom</string>
+    <string name="bookmark">Signet</string>
+    <string name="new_bookmark">Nouveau Signet</string>
+    <string name="settings">Les paramètres</string>
+    <string name="language">Langue</string>
+</resources>

@@ -1,7 +1,6 @@
 package edu.moravian.csci299.bookmarks;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,9 +22,8 @@ import java.util.List;
 import edu.moravian.csci299.bookmark.R;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ListFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * A Fragment that displays a list of bookmarks added by the user. Its list is a RecyclerView, and when a
+ * bookmark is clicked, it will open a WebView of wherever the bookmark is linked to.
  */
 public class ListFragment extends Fragment {
 
@@ -33,9 +31,9 @@ public class ListFragment extends Fragment {
         /**
          * The callback that is called by this fragment when a bookmark is clicked on the hosting
          * activity
-         * @param uri the uri of the bookmark clicked
+         * @param bookmark the bookmark clicked
          */
-        void onBookmarkClicked(Uri uri);
+        void onBookmarkClicked(Bookmark bookmark);
 
         /**
          * The callback that is called by this fragment when the setting icon on the menu
@@ -51,36 +49,37 @@ public class ListFragment extends Fragment {
         void onEditorClicked(Bookmark bookmark);
     }
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_URI = "uri";
-
     private List<Bookmark> bookmarks = Collections.emptyList(); //list of bookmark items
     private RecyclerView list;
-    private Uri uri; //resolved_url
     private Callbacks callbacks;
 
-    //public static ListFragment newInstance() { return newInstance(new Bookmark());}
-
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     * @param uri uri of bookmark to be listed.
+     * The factory method to create a new instance of
+     * this fragment.
      * @return A new instance of fragment ListFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ListFragment newInstance() {
         ListFragment fragment = new ListFragment();
         Bundle args = new Bundle();
-        //args.putParcelable(ARG_URI, uri);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    /**
+     * A method used to update the list of bookmarks.
+     */
+    private void onChange() {
+        BookmarksRepository.get().getBookmarks().observe(this, (bookmarks) -> {
+            this.bookmarks = bookmarks;
+            list.getAdapter().notifyDataSetChanged();
+        });
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onChange();
         setHasOptionsMenu(true);
-        uri = getArguments().getParcelable(ARG_URI);
     }
 
     @Override
@@ -100,14 +99,13 @@ public class ListFragment extends Fragment {
 
     private class BookmarkViewHolder extends RecyclerView.ViewHolder {
         Bookmark bookmark;
-        Uri uri;
         TextView bookmarkView;
 
         public BookmarkViewHolder(@NonNull View itemView)
         {
             super(itemView);
             bookmarkView = itemView.findViewById(R.id.bookmarkView);
-            itemView.setOnClickListener(v -> callbacks.onBookmarkClicked(uri));
+            itemView.setOnClickListener(v -> callbacks.onBookmarkClicked(bookmark));
         }
 
         public void bind(Bookmark bookmark) {
@@ -167,7 +165,7 @@ public class ListFragment extends Fragment {
     }
 
     /**
-     * Handle a menu option being selected.
+     * Handle a menu option being selected. Options are either the settings, or adding a new bookmark.
      * @param item the item being selected
      * @return true if the menu item selection was handled, false otherwise
      */

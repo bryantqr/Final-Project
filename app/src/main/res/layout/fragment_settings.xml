@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="edu.moravian.csci299.bookmarks.SettingsFragment">
+
+    <TextView
+        android:id="@+id/selectLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/language"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/English"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="English" />
+
+    <Button
+        android:id="@+id/Portuguese"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Portuguese" />
+
+    <Button
+        android:id="@+id/Spanish"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Spanish" />
+
+    <Button
+        android:id="@+id/Italian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Italian" />
+
+    <Button
+        android:id="@+id/French"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="French" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/darkMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/darkmode"
+        android:textSize="24sp" />
+
+</LinearLayout>
