@@ -12,7 +12,7 @@ import android.util.Log;
 
 import static android.content.ContentResolver.setIsSyncable;
 
-public class MainActivity extends AppCompatActivity implements ListFragment.Callbacks {
+public class MainActivity extends AppCompatActivity implements ListFragment.Callbacks, BookmarkEditorFragment.Callbacks {
     public static final String AUTHORITY = "edu.moravian.csci299.bookmarks.provider";
     public static final String ACCOUNT_TYPE = "getpocket.com";
     public static final String ACCOUNT = "placeholderaccount";
@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Call
     public void onBookmarkClicked(Bookmark bookmark) {
         getSupportFragmentManager()
             .beginTransaction()
-            .replace(R.id.fragment_container, WebViewFragment.newInstance())
+            .replace(R.id.fragment_container, BookmarkEditorFragment.newInstance(bookmark))
             .addToBackStack(null)
             .commit();
     }

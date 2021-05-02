@@ -4,12 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
+
 /**
  *  A Bookmark object contains all of the information about the bookmark.
  */
 
 @Entity
-public class Bookmark {
+public class Bookmark implements Serializable {
     @PrimaryKey
     @NonNull
     public String  itemId;

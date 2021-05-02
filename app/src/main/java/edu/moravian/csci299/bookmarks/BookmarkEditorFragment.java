@@ -4,21 +4,47 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.EditText;
 
 import java.io.Serializable;
-
+import java.util.UUID;
 
 /**
  * A fragment that displays a bookmark editor. When a bookmark is clicked, a callback method
  * is called to inform the hosting activity. This allows the bookmark to be edited.
  */
-public class BookmarkEditorFragment extends Fragment {
+public class BookmarkEditorFragment extends Fragment implements TextWatcher {
+    /** needed to be implemented */
+    @Override
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+    /** needed to be implemented */
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+    /**
+     * updates bookmark after text changes.
+     * @param s the Editable that changed.
+     */
+    @Override
+    public void afterTextChanged(Editable s) {
+        this.bookmark.givenTitle = s.toString();
+    }
+
+    /**
+     * Updates the UI to match the bookmark.
+     */
+    private void updateUI() {
+        nameView.setText(bookmark.givenTitle);
+    }
+
     /**
      * The callbacks that can be called by this fragment on the hosting Activity.
      */
@@ -31,14 +57,14 @@ public class BookmarkEditorFragment extends Fragment {
         void onEditorClicked(Bookmark bookmark);
     }
 
-
     // fragment initialization parameters
     private static final String ARG_BOOKMARK = "bookmark";
 
     // the hosting activity callbacks
     private Callbacks callbacks;
 
-
+    private EditText nameView;
+    private Bookmark bookmark;
 
     /**
      * Use this factory method to create a new instance of this fragment that
@@ -58,9 +84,19 @@ public class BookmarkEditorFragment extends Fragment {
     public static BookmarkEditorFragment newInstance(Bookmark bookmark) {
         BookmarkEditorFragment fragment = new BookmarkEditorFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_BOOKMARK, (Serializable) bookmark);
+        args.putSerializable(ARG_BOOKMARK, bookmark);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    /**
+     * Initializes bookmark field from arguments object.
+     * @param savedInstanceState
+     */
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bookmark = (Bookmark) getArguments().getSerializable(ARG_BOOKMARK);
     }
 
     /**
@@ -69,24 +105,15 @@ public class BookmarkEditorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        // The date to initially highlight
-        //Date date = DateUtils.useDateOrNow((Date) getArguments().getSerializable(ARG_DATE));
-        //callbacks.onDayChanged(date);
-
         // Inflate the layout for this fragment
         View base = inflater.inflate(R.layout.fragment_bookmark, container, false);
-        // TODO: Setup the calendar
 
-        //CalendarView calendarView = base.findViewById(R.id.calendarView);
-//        calendarView.setDate(date.getTime());
-//        calendarView.setOnDateChangeListener(this);
+        nameView = base.findViewById(R.id.bookmarkName);
+        nameView.addTextChangedListener(this);
+        updateUI();
 
-        // Return the base view
         return base;
     }
-
-
 
     /**
      * When attaching to a hosting activity, use that context for the callbacks.
@@ -106,5 +133,13 @@ public class BookmarkEditorFragment extends Fragment {
         super.onDetach();
         callbacks = null;
     }
-}
 
+    /**
+     * updates the database with the edited bookmark.
+     */
+    @Override
+    public void onStop() {
+        super.onStop();
+        BookmarksRepository.get().updateBookmark(bookmark);
+    }
+}
