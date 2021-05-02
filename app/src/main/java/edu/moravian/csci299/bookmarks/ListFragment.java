@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,9 +48,19 @@ public class ListFragment extends Fragment {
         return fragment;
     }
 
+    private void onChange() {
+        BookmarksRepository.get().getBookmarks().observe(this, (bookmarks) -> {
+            this.bookmarks = bookmarks;
+            list.getAdapter().notifyDataSetChanged();
+        });
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        onChange();
+
         setHasOptionsMenu(true);
     }
 

@@ -10,59 +10,56 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class BookmarksRepository {
-    // Internal singleton fields of the repository.
-    private final AppDatabase database;
-    private final BookmarksDao bookmarksDao;
-    private final Executor executor = Executors.newSingleThreadExecutor();
+    private final BookmarksDAO dao;
+    private final Executor executor;
 
     private BookmarksRepository(Context context) {
-        database = Room.databaseBuilder(
-                context.getApplicationContext(),
-                AppDatabase.class,
-                "app_database").build();
-        bookmarksDao = database.bookmarksDao();
+        AppDatabase database = Room.databaseBuilder(
+            context.getApplicationContext(),
+            AppDatabase.class,
+            "app_database").build();
+        dao = database.bookmarksDao();
+        executor = Executors.newSingleThreadExecutor();
     }
 
-    // The public methods that simply call the DAO methods.
+    // The public methods that call the DAO methods.
     public LiveData<List<Bookmark>> getBookmarks() {
-        return bookmarksDao.getAllBookmarks();
+        return dao.getAllBookmarks();
     }
-
     public LiveData<Bookmark> getBookmark(String id) {
-        return bookmarksDao.getBookmark(id);
+        return dao.getBookmark(id);
     }
-
-//    public LiveData<List<Bookmarks>> getChildren(int parentId) {
-//        return bookmarksDao.getChildren(parentId);
-//    }
 
     // Insert and update methods.
     public void addBookmark(Bookmark bookmark) {
         executor.execute(() -> {
-            bookmarksDao.addBookmark(bookmark);
+            dao.addBookmark(bookmark);
+        });
+    }
+
+    public void removeBookmark(Bookmark bookmark) {
+        executor.execute(() -> {
+            dao.removeBookmark(bookmark);
         });
     }
 
     public void updateBookmark(Bookmark bookmark) {
         executor.execute(() -> {
-            bookmarksDao.updateBookmark(bookmark);
+            dao.updateBookmark(bookmark);
         });
     }
 
     // Single instance of the repository.
     private static BookmarksRepository INSTANCE;
-
     public static void initialize(Context context) {
         if (INSTANCE == null) {
             INSTANCE = new BookmarksRepository(context);
         }
     }
-
     public static BookmarksRepository get() {
         if (INSTANCE == null) {
             throw new IllegalStateException("BookmarkRepository must be initialized");
         }
         return INSTANCE;
     }
-
 }

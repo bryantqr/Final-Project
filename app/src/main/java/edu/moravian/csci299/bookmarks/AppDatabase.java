@@ -10,5 +10,5 @@ import androidx.room.TypeConverters;
 @Database(entities = {Bookmark.class}, version = 1)
 @TypeConverters(BookmarkTypeConverter.class)
 public abstract class AppDatabase extends RoomDatabase {
-    public abstract BookmarksDao bookmarksDao();
+    public abstract BookmarksDAO bookmarksDao();
 }
