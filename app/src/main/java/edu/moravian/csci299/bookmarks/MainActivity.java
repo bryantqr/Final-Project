@@ -3,6 +3,7 @@ package edu.moravian.csci299.bookmarks;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity implements ListFragment.Callbacks {
     @Override
@@ -23,34 +24,37 @@ public class MainActivity extends AppCompatActivity implements ListFragment.Call
 
     @Override
     public void onBookmarkClicked(Bookmark bookmark) {
-        /*
+        //Log.w("giufdgsu","gudfgysu");
+
         getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.fragment_container, WebViewFragment.newInstance())
             .addToBackStack(null)
             .commit();
-         */
+
     }
 
     @Override
     public void onSettingsClicked() {
-        /*
+        //Log.w("giufdgsu","gudfgysu");
+
         getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.fragment_container, SettingsBookmarkFragment.newInstance())
             .addToBackStack(null)
             .commit();
-         */
+
     }
 
     @Override
     public void onEditorClicked(Bookmark bookmark) {
-        /*
+        //Log.w("giufdgsu","gudfgysu");
+
         getSupportFragmentManager()
             .beginTransaction()
             .replace(R.id.fragment_container, BookmarkEditorFragment.newInstance(bookmark))
             .addToBackStack(null)
             .commit();
-         */
+
     }
 }

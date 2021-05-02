@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Bookmarks</string>
+    <string name="app_name">Marcadores</string>
     <string name="tag">tag</string>
     <string name="name">Nombre</string>
     <string name="bookmark">Marcador</string>
     <string name="new_bookmark">Nuevo marcador</string>
     <string name="settings">Ajustes</string>
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -1,5 +1,9 @@
 package edu.moravian.csci299.bookmarks;
 
+
+/**
+ *  An Item status object contains all of the information about the item.
+ */
 public enum ItemStatus {
     DEFAULT(0),
     ARCHIVED(1),
