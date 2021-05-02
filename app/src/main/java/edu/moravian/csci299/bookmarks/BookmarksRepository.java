@@ -20,6 +20,16 @@ public class BookmarksRepository {
             "app_database").build();
         dao = database.bookmarksDao();
         executor = Executors.newSingleThreadExecutor();
+
+        /*
+        for (int i = 0; i < 10; i++) {
+            Bookmark bookmark = new Bookmark();
+            bookmark.itemId = "100" + i;
+            bookmark.givenTitle = "Title " + (i+1);
+            bookmark.resolvedTitle = "Title " + (i+1);
+            addBookmark(bookmark);
+        }
+         */
     }
 
     // The public methods that call the DAO methods.

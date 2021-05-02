@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -124,19 +123,19 @@ public class ListFragment extends Fragment {
 
     private class BookmarkViewHolder extends RecyclerView.ViewHolder {
         private Bookmark bookmark;
-        private final TextView bookmarkView;
+        private final TextView textView;
 
         public BookmarkViewHolder(@NonNull View itemView)
         {
             super(itemView);
 
-            bookmarkView = itemView.findViewById(R.id.bookmarkView);
+            textView = itemView.findViewById(R.id.textView);
             itemView.setOnClickListener(v -> callbacks.onBookmarkClicked(bookmark));
         }
 
         public void bind(Bookmark bookmark) {
             this.bookmark = bookmark;
-            bookmarkView.setText(bookmark.resolvedTitle);
+            textView.setText(bookmark.resolvedTitle);
         }
     }
 
