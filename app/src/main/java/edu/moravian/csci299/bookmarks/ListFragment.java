@@ -153,7 +153,7 @@ public class ListFragment extends Fragment {
 
         public void bind(Bookmark bookmark) {
             this.bookmark = bookmark;
-            textView.setText(bookmark.resolvedTitle);
+            textView.setText(bookmark.givenTitle);
         }
     }
 
