@@ -1,8 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
+        android:id="@+id/new_bookmark"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="@string/new_bookmark"
+        app:showAsAction="ifRoom|withText"/>
+    <item
         android:id="@+id/settings"
         android:icon="@android:drawable/ic_menu_preferences"
         android:title="@string/settings"
         app:showAsAction="ifRoom|withText"/>
+
 </menu>

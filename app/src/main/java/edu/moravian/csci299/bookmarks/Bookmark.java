@@ -8,8 +8,8 @@ import androidx.room.PrimaryKey;
 public class Bookmark {
     @PrimaryKey
     @NonNull
-    public String itemId;
-    public String resolvedId;
+    public String  itemId;
+    public String  resolvedId;
     public String givenUrl;
     public String resolvedUrl;
     public String givenTitle;

@@ -29,7 +29,7 @@ public interface BookmarksDao {
      * @return a live data view of the bookmark from the database
      */
     @Query("SELECT * FROM Bookmark WHERE itemId = (:id) LIMIT 1")
-    LiveData<Bookmark> getBookmark(int id);
+    LiveData<Bookmark> getBookmark(String id);
 
 //    /**
 //     * Gets all of the nodes that are the children of a specific node given by its parent id.
@@ -46,7 +46,7 @@ public interface BookmarksDao {
      * the argument any number of times.
      */
     @Insert
-    void addBookmarks(Bookmark... bookmarks);
+    void addBookmark(Bookmark bookmark);
 
     /**
      * Remove a single bookmark in the database.

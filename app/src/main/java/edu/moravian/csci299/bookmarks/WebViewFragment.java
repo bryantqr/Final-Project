@@ -1,5 +1,6 @@
 package edu.moravian.csci299.bookmarks;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -16,21 +17,24 @@ import edu.moravian.csci299.bookmark.R;
 
 public class WebViewFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_URL = "url";
+    private static final String ARG_URI = "uri";
 
-    // TODO: Rename and change types of parameters
-    private String url;
+    private Uri uri = Uri.parse("https://getpocket.com/my-list");
+    private WebView webView;
 
-    public static Fragment newInstance() {
-        return null;
+    public static Fragment newInstance(Uri uri) {
+        WebViewFragment fragment = new WebViewFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(ARG_URI, uri);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        url = getArguments().getString(ARG_URL);
+        uri = getArguments().getParcelable(ARG_URI);
     }
 
     @Override
@@ -40,14 +44,16 @@ public class WebViewFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_web_view, container, false);
 
         WebView webView = v.findViewById(R.id.bookmarkWebView);
-        webView.loadUrl(url);
 
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
         webView.setWebViewClient(new WebViewClient());
+        webView.loadUrl(uri.toString());
 
         return v;
     }
+
+
 
 }

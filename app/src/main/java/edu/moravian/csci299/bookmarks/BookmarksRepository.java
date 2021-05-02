@@ -28,7 +28,7 @@ public class BookmarksRepository {
         return bookmarksDao.getAllBookmarks();
     }
 
-    public LiveData<Bookmark> getBookmark(int id) {
+    public LiveData<Bookmark> getBookmark(String id) {
         return bookmarksDao.getBookmark(id);
     }
 
@@ -39,7 +39,7 @@ public class BookmarksRepository {
     // Insert and update methods.
     public void addBookmark(Bookmark bookmark) {
         executor.execute(() -> {
-            bookmarksDao.addBookmarks(bookmark);
+            bookmarksDao.addBookmark(bookmark);
         });
     }
 

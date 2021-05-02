@@ -1,6 +1,7 @@
 package edu.moravian.csci299.bookmarks;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -30,38 +30,48 @@ import edu.moravian.csci299.bookmark.R;
 public class ListFragment extends Fragment {
 
     public interface Callbacks {
-        void onBookmarkClicked(Bookmark bookmark);
+        /**
+         * The callback that is called by this fragment when a bookmark is clicked on the hosting
+         * activity
+         * @param uri the uri of the bookmark clicked
+         */
+        void onBookmarkClicked(Uri uri);
+
+        /**
+         * The callback that is called by this fragment when the setting icon on the menu
+         * is clicked on the hosting activity
+         */
         void onSettingsClicked();
+
+        /**
+         * The callback that is called by this fragment when the bookmark editor is clicked on the hosting
+         * activity
+         * @param bookmark
+         */
         void onEditorClicked(Bookmark bookmark);
     }
 
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_BOOKMARK = "bookmark";
+    private static final String ARG_URI = "uri";
 
-    // TODO: Rename and change types of parameters
     private List<Bookmark> bookmarks = Collections.emptyList(); //list of bookmark items
-    private String url; //resolved_url
-    private Bookmark bookmark; //bookmark item
-    private TextView bookmarkView; //the bookmark on the list
-    private BookmarkAdapter adapter;
-
-
+    private RecyclerView list;
+    private Uri uri; //resolved_url
     private Callbacks callbacks;
 
-    public static ListFragment newInstance() { return newInstance(new Bookmark());}
+    //public static ListFragment newInstance() { return newInstance(new Bookmark());}
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     * @param bookmark bookmark to be listed.
+     * @param uri uri of bookmark to be listed.
      * @return A new instance of fragment ListFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ListFragment newInstance(Bookmark bookmark) {
+    public static ListFragment newInstance() {
         ListFragment fragment = new ListFragment();
         Bundle args = new Bundle();
-        args.putSerializable(ARG_BOOKMARK, (Serializable)bookmark);
+        //args.putParcelable(ARG_URI, uri);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,32 +80,34 @@ public class ListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        bookmark = (Bookmark) getArguments().getSerializable(ARG_BOOKMARK);
+        uri = getArguments().getParcelable(ARG_URI);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_list, container, false);
+        View base = inflater.inflate(R.layout.fragment_list, container, false);
 
-        RecyclerView list_view = v.findViewById(R.id.list_view);
-        list_view.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new BookmarkAdapter();
-        list_view.setAdapter(adapter);
+        BookmarkViewAdapter adapter = new BookmarkViewAdapter();
+        list = base.findViewById(R.id.list_view);
+        list.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new BookmarkViewAdapter();
+        list.setAdapter(adapter);
 
-        return v;
+        return base;
     }
 
     private class BookmarkViewHolder extends RecyclerView.ViewHolder {
         Bookmark bookmark;
+        Uri uri;
         TextView bookmarkView;
 
         public BookmarkViewHolder(@NonNull View itemView)
         {
             super(itemView);
             bookmarkView = itemView.findViewById(R.id.bookmarkView);
-            itemView.setOnClickListener(v -> callbacks.onBookmarkClicked(bookmark));
+            itemView.setOnClickListener(v -> callbacks.onBookmarkClicked(uri));
         }
 
         public void bind(Bookmark bookmark) {
@@ -104,7 +116,7 @@ public class ListFragment extends Fragment {
         }
     }
 
-    private class BookmarkAdapter extends RecyclerView.Adapter<BookmarkViewHolder> {
+    private class BookmarkViewAdapter extends RecyclerView.Adapter<BookmarkViewHolder> {
 
         @NonNull
         @Override
@@ -162,8 +174,11 @@ public class ListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.settings) {
-            SettingsBookmarkFragment settingsBookmarkFragment = new SettingsBookmarkFragment();
             callbacks.onSettingsClicked();
+            return true;
+        } else if (item.getItemId() == R.id.new_bookmark) {
+            Bookmark bookmark = new Bookmark();
+            BookmarksRepository.get().addBookmark(bookmark);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
